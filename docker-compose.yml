@@ -1,0 +1,76 @@
+services:
+  user:
+    build:
+      context: ./user
+      dockerfile: dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - MONGO_URI=mongodb+srv://navjotsumandev_db_user:Password123@cluster0.kxjxxrx.mongodb.net/?appName=Cluster0
+      - REDIS_URL=rediss://default:AXThAAIncDFkZjAzMzk4MWY2ZDU0M2VhOWM1ODUzZjhjODdjZjg0MnAxMjk5MjE@premium-bull-29921.upstash.io:6379
+      - JWT_SECRET=testNavjot123
+      - Rabbitmq_Host=rabbitmq
+      - Rabbitmq_Username=admin
+      - Rabbitmq_Password=admin123
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  chat:
+    build:
+      context: ./chat
+      dockerfile: dockerfile
+    ports:
+      - "5002:5002"
+    environment:
+      - PORT=5002
+      - MONGO_URI=mongodb+srv://navjotsumandev_db_user:Password123@cluster0.kxjxxrx.mongodb.net/?appName=Cluster0
+      - JWT_SECRET=testNavjot123
+    networks:
+      - app-network
+
+  mail:
+    build:
+      context: ./mail
+      dockerfile: dockerfile
+    ports:
+      - "5003:5003"
+    environment:
+      - PORT=5003
+      - MAIL_USER=navjotsumandev@gmail.com
+      - MAIL_PASS=pgfaltmjtvskzkrm
+      - Rabbitmq_Host=rabbitmq
+      - Rabbitmq_Username=admin
+      - Rabbitmq_Password=admin123
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  rabbitmq:
+    image: rabbitmq:management
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin123
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - app-network
+
+volumes:
+  rabbitmq_data:
+
+networks:
+  app-network:
