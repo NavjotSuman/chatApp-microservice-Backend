@@ -5,14 +5,9 @@ services:
       dockerfile: dockerfile
     ports:
       - "5001:5001"
+    env_file: .env
     environment:
       - PORT=5001
-      - MONGO_URI=mongodb+srv://navjotsumandev_db_user:Password123@cluster0.kxjxxrx.mongodb.net/?appName=Cluster0
-      - REDIS_URL=rediss://default:AXThAAIncDFkZjAzMzk4MWY2ZDU0M2VhOWM1ODUzZjhjODdjZjg0MnAxMjk5MjE@premium-bull-29921.upstash.io:6379
-      - JWT_SECRET=testNavjot123
-      - Rabbitmq_Host=rabbitmq
-      - Rabbitmq_Username=admin
-      - Rabbitmq_Password=admin123
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -25,10 +20,9 @@ services:
       dockerfile: dockerfile
     ports:
       - "5002:5002"
+    env_file: .env
     environment:
       - PORT=5002
-      - MONGO_URI=mongodb+srv://navjotsumandev_db_user:Password123@cluster0.kxjxxrx.mongodb.net/?appName=Cluster0
-      - JWT_SECRET=testNavjot123
     networks:
       - app-network
 
@@ -38,13 +32,9 @@ services:
       dockerfile: dockerfile
     ports:
       - "5003:5003"
+    env_file: .env
     environment:
       - PORT=5003
-      - MAIL_USER=navjotsumandev@gmail.com
-      - MAIL_PASS=pgfaltmjtvskzkrm
-      - Rabbitmq_Host=rabbitmq
-      - Rabbitmq_Username=admin
-      - Rabbitmq_Password=admin123
     depends_on:
       rabbitmq:
         condition: service_healthy
