@@ -29,8 +29,8 @@ RUN npm ci --omit=dev
 # Copy built application from builder stage
 COPY --from=builder /app/dist ./dist
 
-# Expose port (assuming default Express port 3000, adjust if needed)
-EXPOSE 3000
+# Expose port
+EXPOSE 5001
 
 # Start the application
 CMD ["npm", "start"]
