@@ -8,9 +8,6 @@ services:
     env_file: .env
     environment:
       - PORT=5001
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
     networks:
       - app-network
 
@@ -35,32 +32,8 @@ services:
     env_file: .env
     environment:
       - PORT=5003
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
     networks:
       - app-network
-
-  rabbitmq:
-    image: rabbitmq:management
-    environment:
-      - RABBITMQ_DEFAULT_USER=admin
-      - RABBITMQ_DEFAULT_PASS=admin123
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
-    healthcheck:
-      test: ["CMD", "rabbitmq-diagnostics", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-    networks:
-      - app-network
-
-volumes:
-  rabbitmq_data:
 
 networks:
   app-network:
