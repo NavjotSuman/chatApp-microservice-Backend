@@ -2,6 +2,11 @@
 
 A scalable microservice-based backend for ChatSync, a real-time chat application. Built with Node.js, TypeScript, and Express, featuring microservice architecture with Docker containerization, MongoDB for data persistence, Redis for caching, and RabbitMQ for inter-service communication.
 
+## 🔗 Related Repositories
+
+[![GitHub](https://img.shields.io/badge/Frontend-ChatSync%20Frontend-blue)](https://github.com/NavjotSuman/chatApp-microservice-Frontend)
+[![GitHub](https://img.shields.io/badge/Backend-ChatSync%20Backend-green)](https://github.com/NavjotSuman/chatApp-microservice-Backend)
+
 ## 🚀 Features
 
 - **Microservice Architecture**: Modular, scalable services for user management, chat, and email notifications
